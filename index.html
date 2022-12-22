@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vocie</title>
+  </head>
+
+  <style>
+    *,
+    *::after,
+    *::before {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+      background-color: rgb(0, 0, 0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #000;
+      min-height: 100vh;
+    }
+    .vocie__to-text {
+      width: 600px;
+      text-align: center;
+    }
+    #convert__text {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      resize: none;
+      padding: 10px;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 50px;
+      color: #fff;
+    }
+  </style>
+  <body>
+    <div class="vocie__to-text">
+      <h1>Vocie To Converter</h1>
+      <textarea id="convert__text"></textarea>
+      <button id="click__to__convert">Vocie to Text</button>
+    </div>
+
+    <script>
+      const btn = document.querySelector("#click__to__convert");
+      const text = document.querySelector("#convert__text");
+      btn.addEventListener("click", function () {
+        let speech = true;
+        window.SpeechRecognition = window.webkitSpeechRecognition;
+        const recogrition = new SpeechRecognition();
+        recogrition.interimResults = true;
+
+        recogrition.addEventListener("result", (e) => {
+          const transcript = Array.from(e.results)
+            .map((result) => result[0])
+            .map((result) => result.transcript);
+
+          text.innerHTML = transcript;
+        });
+
+        if (speech == true) {
+          recogrition.start();
+        }
+      });
+    </script>
+  </body>
+</html>
